@@ -1,0 +1,27 @@
+@import "../../_variables.scss";
+
+.google-login-btn {
+  font-family: $default-font;
+  font-size: 20px;
+  font-weight: 400;
+  padding: 16px;
+  margin: 0 32px;
+  width: fit-content;
+  border-radius: 6px;
+  background-color: transparent;
+  border: 1px solid $dark_blue_color;
+  color: $dark_blue_color;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: $dark_blue_color;
+    color: $white_color;
+    transform: scale(1.1);
+  }
+    @media (max-width: $breakpoint-ipad-screen) {
+        font-size: 28px;
+    }
+    @media (max-width: $breakpoint-half-screen) {
+        font-size: 18px;
+    }
+}
