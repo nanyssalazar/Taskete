@@ -1,0 +1,22 @@
+@import "../../_variables.scss";
+
+// change style accordingly to navbar
+.google-logout-btn {
+    font-family: $default-font;
+  font-size: 20px;
+  font-weight: 400;
+  padding: 8px 16px;
+  margin: 0 32px;
+  height: 48px;
+  width: fit-content;
+  border-radius: 6px;
+  background-color: transparent;
+  border: 1px solid $dark_blue_color;
+  color: $dark_blue_color;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: $dark_blue_color;
+    color: $white_color;
+  }
+}
