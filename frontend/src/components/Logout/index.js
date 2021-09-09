@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { GoogleLogout } from "react-google-login";
-// import api from "../../services/api.js";
 import "../Logout/Logout.scss";
 require("dotenv").config();
 

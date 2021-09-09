@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
-// import api from "../../services/api.js";
 import '../Login/Login.scss';
 import api from '../../services/api.js';
 require('dotenv').config();
@@ -49,7 +48,6 @@ const Login = () => {
     <GoogleLogin
       clientId={process.env.GOOGLE_CLIENT_ID}
       render={(renderProps) => (
-        // cambiar aqui
         <button
           className='google-login-btn'
           onClick={renderProps.onClick}
