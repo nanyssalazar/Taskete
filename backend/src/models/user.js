@@ -7,7 +7,6 @@ const UserSchema = new mongoose.Schema({
   googleId: String,
   imageUrl: String,
   name: String,
-  //lists: [],
 });
 
 module.exports = mongoose.model('User', UserSchema);
