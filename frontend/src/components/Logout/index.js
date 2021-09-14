@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { GoogleLogout } from "react-google-login";
+import { IoLogOut } from "react-icons/io5";
 import "../Logout/Logout.scss";
 require("dotenv").config();
 
@@ -27,7 +28,7 @@ const Logout = () => {
             onClick={renderProps.onClick}
             disabled={renderProps.disabled}
           >
-            Log out
+            <IoLogOut/>
           </button>
         )}
         onLogoutSuccess={onLogoutSuccess}

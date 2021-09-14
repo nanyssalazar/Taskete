@@ -13,7 +13,7 @@ const Home = () => {
           <Login />
         </div>
       </div>
-      <img src={tasks} />
+      <img src={tasks} alt="man crossing a task from a to-do list" />
     </div>
   );
 };

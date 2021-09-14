@@ -3,7 +3,7 @@
 // change style accordingly to navbar
 .google-logout-btn {
     font-family: $default-font;
-  font-size: 20px;
+  font-size: 44px;
   font-weight: 400;
   padding: 8px 16px;
   margin: 0 32px;
@@ -11,12 +11,13 @@
   width: fit-content;
   border-radius: 6px;
   background-color: transparent;
-  border: 1px solid $dark_blue_color;
-  color: $dark_blue_color;
+  border: none;
+  color: $black_color;
   transition: all 0.2s ease-in-out;
 
   &:hover {
-    background-color: $dark_blue_color;
-    color: $white_color;
+    color: $dark_blue_color;
+    transform: scale(1.2);
+    cursor: pointer;
   }
 }
