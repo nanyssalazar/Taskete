@@ -1,16 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import Sidebar from '../../components/Sidebar';
-import Form from '../../components/Form';
-import './Lists.scss';
-import api from '../../services/api';
+import React, { useState, useEffect } from "react";
+import Sidebar from "../../components/Sidebar";
+import Form from "../../components/Form";
+import ListItem from "../../components/ListItem";
+import api from "../../services/api";
+import "./Lists.scss";
 
 const Lists = () => {
   const [formIsShown, setFormIsShown] = useState(false);
   const [lists, setLists] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
+  console.log(isLoading);
   const showFormHandler = () => {
     setFormIsShown(true);
-    console.log('HERE');
+    console.log("HERE");
   };
 
   const hideFormHandler = () => {
@@ -18,33 +21,40 @@ const Lists = () => {
   };
 
   const fetchLists = async () => {
-    const author = localStorage.getItem('_id');
+    const author = localStorage.getItem("_id");
     const response = await api.get(`/lists/${author}`);
     const listsFetched = response.data;
     setLists(listsFetched);
-    console.log(listsFetched);
+    setIsLoading(false);
+    console.log("LISTS", listsFetched);
   };
 
   useEffect(() => {
-    fetchLists();
+    setTimeout(() => {
+      fetchLists();
+    }, 150);
   }, []);
 
   return (
     <div>
       <Sidebar onAddList={showFormHandler} />
       {formIsShown && <Form onClose={hideFormHandler} />}
-      <div className='lists-content'>
-        {lists.length > 0 ? (
-          lists.map((list) => (
-            <>
-              <p key={list._id}> {list.title}</p>
-              <p>{list.colorValue}</p>
-            </>
-          ))
-        ) : (
-          <h1>No lists yet.</h1>
-        )}
-      </div>
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : lists.length > 0 ? (
+        <div className="lists-container">
+          {lists.map((list) => (
+            <ListItem key={list._id} {...list} />
+          ))}
+        </div>
+      ) : (
+        <>
+          <div className="no-lists">
+            <p>You don't have any lists yet</p>
+            <img src="https://media.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif?cid=ecf05e475guek39srikhna896xhu67fmy2jccyf82nztpmba&rid=giphy.gif&ct=g" />
+          </div>
+        </>
+      )}
     </div>
   );
 };
