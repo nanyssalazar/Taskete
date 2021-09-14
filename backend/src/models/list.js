@@ -2,10 +2,11 @@ const mongoose = require('mongoose');
 
 const ListSchema = new mongoose.Schema({
   title: String,
-  dateCreated: Date,
-  lastEdited: Date,
+  dateCreated: { type: Date, default: Date.now },
+  lastEdited: { type: Date, default: Date.now },
   //relacionar con lists
   author: String,
+  colorValue: String,
   //   author: {
   //     id: {
   //       type: mongoose.Schema.Types.ObjectId,

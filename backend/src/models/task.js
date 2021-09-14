@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 
 const TaskSchema = new mongoose.Schema({
   description: String,
-  dateCreated: Date,
-  lastEdited: Date,
+  dateCreated: { type: Date, default: Date.now },
+  lastEdited: { type: Date, default: Date.now },
   status: String,
   // relacionar con list
   linkedList: String,

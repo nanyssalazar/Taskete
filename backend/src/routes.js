@@ -15,13 +15,13 @@ routes.get('/users/:userId', UsersController.getUserById);
 routes.delete('/users/:userId', UsersController.deleteUser);
 
 // LISTS
-routes.get('/lists', ListsController.getAllLists);
 routes.post('/lists', ListsController.createList);
+routes.get('/lists/:authorId', ListsController.getAllLists);
 routes.delete('/lists/:listId', ListsController.deleteList);
 
 // TASKS
-routes.get('/tasks', TasksController.getAllTasks);
 routes.post('/tasks', TasksController.createTask);
+routes.get('/tasks/:listId', TasksController.getAllTasks);
 routes.delete('/tasks/:taskId', TasksController.deleteTask);
 
 module.exports = routes;

@@ -41,6 +41,9 @@ const Login = () => {
       .then((res) => {
         console.log(res);
         console.log(res.data);
+        //guardar en local storage el _id al que se relacionaran las lists en el post
+        console.log(res.data[0]._id);
+        localStorage.setItem('_id', res.data[0]._id);
       });
   };
 

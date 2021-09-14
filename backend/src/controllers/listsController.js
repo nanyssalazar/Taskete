@@ -5,11 +5,11 @@ module.exports = {
   //get all list that have the same author
   async getAllLists(req, res) {
     //make sure to send the id stringified
-    const { author } = req.body;
+    const { authorId } = req.params;
     // const lists = await List.aggregate([
     //   { $match: { author: { id: userId } } },
     // ]);
-    const lists = await List.find({ author: author });
+    const lists = await List.find({ author: authorId });
     if (lists) {
       return res.json(lists);
     } else {
@@ -18,12 +18,11 @@ module.exports = {
   },
   async createList(req, res) {
     console.log(req.body);
-    const { title, dateCreated, lastEdited, author } = req.body;
+    const { title, author, colorValue } = req.body;
     const list = await List.create({
       title,
-      dateCreated,
-      lastEdited,
       author,
+      colorValue,
     });
     return res.json(list);
   },

@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import { GoogleLogout } from "react-google-login";
-import { IoLogOut } from "react-icons/io5";
-import "../Logout/Logout.scss";
-require("dotenv").config();
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { GoogleLogout } from 'react-google-login';
+import { IoLogOut } from 'react-icons/io5';
+import '../Logout/Logout.scss';
+require('dotenv').config();
 
 const Logout = () => {
   const [isLoggedIn, setIsLogedIn] = useState(false);
@@ -11,11 +11,10 @@ const Logout = () => {
 
   const onLogoutSuccess = () => {
     setIsLogedIn(false);
-    console.log("[Logout Success] currentUser:");
-    localStorage.removeItem("email");
-    localStorage.removeItem("nombre");
-    alert("Has cerrado sesión.");
-    history.push("/");
+    console.log('[Logout Success] currentUser:');
+    localStorage.clear();
+    alert('Has cerrado sesión.');
+    history.push('/');
   };
 
   return (
@@ -24,11 +23,10 @@ const Logout = () => {
         clientId={process.env.GOOGLE_CLIENT_ID}
         render={(renderProps) => (
           <button
-            className="google-logout-btn"
+            className='google-logout-btn'
             onClick={renderProps.onClick}
-            disabled={renderProps.disabled}
-          >
-            <IoLogOut/>
+            disabled={renderProps.disabled}>
+            <IoLogOut />
           </button>
         )}
         onLogoutSuccess={onLogoutSuccess}

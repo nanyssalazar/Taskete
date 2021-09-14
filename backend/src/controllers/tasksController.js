@@ -4,10 +4,10 @@ require('dotenv').config();
 module.exports = {
   //get all task from one list
   async getAllTasks(req, res) {
-    const { linkedList } = req.body;
+    const { listId } = req.params;
     //const listId = list._id;
     // const tasks = await Task.aggregate([{ $match: { list: { id: listId } } }]);
-    const tasks = await Task.find({ linkedList: linkedList });
+    const tasks = await Task.find({ linkedList: listId });
     if (tasks) {
       return res.json(tasks);
     } else {
