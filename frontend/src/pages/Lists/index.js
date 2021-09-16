@@ -8,8 +8,8 @@ import "./Lists.scss";
 const Lists = () => {
   const [formIsShown, setFormIsShown] = useState(false);
   const [lists, setLists] = useState([]);
+  const [sortedLists, setSortedLists] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
   console.log(isLoading);
   const showFormHandler = () => {
     setFormIsShown(true);
@@ -27,6 +27,10 @@ const Lists = () => {
     setLists(listsFetched);
     setIsLoading(false);
     console.log("LISTS", listsFetched);
+    setSortedLists(
+      listsFetched.sort((a, b) => b.lastEdited - a.lastEdited).reverse()
+    );
+    console.log("SORTED LISTS", sortedLists);
   };
 
   useEffect(() => {
@@ -41,9 +45,9 @@ const Lists = () => {
       {formIsShown && <Form onClose={hideFormHandler} />}
       {isLoading ? (
         <p>Loading...</p>
-      ) : lists.length > 0 ? (
+      ) : sortedLists.length > 0 ? (
         <div className="lists-container">
-          {lists.map((list) => (
+          {sortedLists.map((list) => (
             <ListItem key={list._id} {...list} />
           ))}
         </div>
