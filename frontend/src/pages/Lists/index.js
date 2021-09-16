@@ -24,13 +24,18 @@ const Lists = () => {
     const author = localStorage.getItem("_id");
     const response = await api.get(`/lists/${author}`);
     const listsFetched = response.data;
+    console.log("fetched", listsFetched);
     setLists(listsFetched);
-    setIsLoading(false);
-    console.log("LISTS", listsFetched);
+    listsFetched.map((item) => {
+      item.lastEdited = new Date(item.lastEdited);
+    });
+    console.log("sorted lsits with lists", lists);
     setSortedLists(
-      listsFetched.sort((a, b) => b.lastEdited - a.lastEdited).reverse()
+      listsFetched.sort(
+        (a, b) => b.lastEdited.valueOf() - a.lastEdited.valueOf()
+      )
     );
-    console.log("SORTED LISTS", sortedLists);
+    setIsLoading(false);
   };
 
   useEffect(() => {
