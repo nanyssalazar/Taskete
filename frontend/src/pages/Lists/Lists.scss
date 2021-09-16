@@ -1,0 +1,57 @@
+@import "../../variables";
+
+.lists-container {
+  display: grid;
+  justify-items: center;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  column-gap: 24px;
+  row-gap: 32px;
+  margin: 48px 36px 48px 180px;
+  margin-left: 180px;
+
+  @media (max-width: $breakpoint-half-screen) {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+  
+  @media (max-width: $breakpoint-ipad-screen) and (min-width: $breakpoint-ipad-screen) {
+    margin-left: 240px;
+    grid-template-columns: repeat(auto-fill, minmax(156px, 1fr));
+  }
+
+  @media (max-width: $breakpoint-phone-screen) {
+    margin-left: 136px;
+  }
+}
+
+.no-lists {
+  display: flex;
+  height: 100vh;
+  margin-left: 144px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  p {
+    font-family: $default-font;
+    font-size: 24px;
+    padding: 40px;
+  }
+
+  img {
+    width: 340px;
+    height: 340px;
+    border-radius: 50%;
+  }
+
+  @media (max-width: $breakpoint-phone-screen) {
+    margin-left: 104px;
+    p {
+      font-size: 20px;
+      text-align: center;
+    }
+    img {
+      width: 160px;
+      height: 160px;
+    }
+  }
+}
