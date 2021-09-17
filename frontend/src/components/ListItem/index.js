@@ -9,7 +9,7 @@ const ListItem = ({
   dateCreated,
   lastEdited,
 }) => {
-  let formattedDate = new Date(dateCreated);
+  let formattedDate = new Date(lastEdited);
   const options = {
     weekday: "short",
     year: "numeric",
