@@ -10,7 +10,7 @@ export const Routes = () => {
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/lists" exact component={Lists} />
-          <Route path="/tasks" exact component={Tasks} />
+          <Route path="/lists/:listTitle" exact component={Tasks} />
         </Switch>
       </BrowserRouter>
   );

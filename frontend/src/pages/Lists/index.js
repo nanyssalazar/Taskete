@@ -46,7 +46,7 @@ const Lists = () => {
 
   return (
     <div>
-      <Sidebar onAddList={showFormHandler} />
+      <Sidebar onAddList={showFormHandler} title="My lists" returnButton={false}/>
       {formIsShown && <Form onClose={hideFormHandler} />}
       {isLoading ? (
         <p>Loading...</p>

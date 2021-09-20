@@ -16,10 +16,10 @@
   text-align: center;
 
   &__title {
-      font-family: $default-font;
-      font-size: 24px;
-      font-weight: bold;
-      padding-bottom: 40px;
+    font-family: $default-font;
+    font-size: 24px;
+    font-weight: bold;
+    padding-bottom: 40px;
   }
 
   &__add {
@@ -39,12 +39,22 @@
       cursor: pointer;
     }
   }
+  &__return {
+    font-size: 40px;
+    transition: all 0.2s ease-in-out;
 
-  @media (max-width: $breakpoint-ipad-screen) and (min-width:$breakpoint-ipad-screen) {
-      width: 200px;
+    &:hover {
+      color: $dark_blue_color;
+      transform: scale(1.2);
+      cursor: pointer;
+    }
   }
 
-    @media (max-width: $breakpoint-phone-screen){
-      width: 108px;
+  @media (max-width: $breakpoint-ipad-screen) and (min-width: $breakpoint-ipad-screen) {
+    width: 200px;
+  }
+
+  @media (max-width: $breakpoint-phone-screen) {
+    width: 108px;
   }
 }

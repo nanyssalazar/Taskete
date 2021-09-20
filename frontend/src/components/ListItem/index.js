@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import "./ListItem.scss";
 
 const ListItem = ({
@@ -9,6 +10,7 @@ const ListItem = ({
   dateCreated,
   lastEdited,
 }) => {
+  let history = useHistory();
   let formattedDate = new Date(lastEdited);
   const options = {
     weekday: "short",
@@ -18,8 +20,12 @@ const ListItem = ({
   };
   formattedDate = formattedDate.toLocaleDateString("en-US", options);
 
+  const listItemHandler = ()=> {
+    history.push(`/lists/${title}`);
+  }
+
   return (
-    <div className="list-item" style={{ background: colorValue }}>
+    <div className="list-item" style={{ background: colorValue }} onClick={listItemHandler}>
       <button>x</button>
       <h3>{title}</h3>
       <p>{formattedDate}</p>
