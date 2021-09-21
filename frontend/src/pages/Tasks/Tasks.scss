@@ -3,3 +3,36 @@
 .tasks-container {
   margin: 48px 36px 48px 180px;
 }
+
+.no-tasks {
+  display: flex;
+  height: 100vh;
+  margin-left: 144px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  p {
+    font-family: $default-font;
+    font-size: 24px;
+    padding: 40px;
+  }
+
+  img {
+    width: 340px;
+    height: 340px;
+    border-radius: 50%;
+  }
+
+  @media (max-width: $breakpoint-phone-screen) {
+    margin-left: 104px;
+    p {
+      font-size: 20px;
+      text-align: center;
+    }
+    img {
+      width: 160px;
+      height: 160px;
+    }
+  }
+}
