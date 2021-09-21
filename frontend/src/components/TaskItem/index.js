@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./TaskItem.scss";
 
 const TaskItem = ({
@@ -10,6 +10,8 @@ const TaskItem = ({
   lastEdited,
   isDone,
 }) => {
+  const [isTaskCompleted, setIsTaskComplete] = useState(false);
+
   let formattedDate = new Date(lastEdited);
   const options = {
     weekday: "short",
@@ -19,15 +21,38 @@ const TaskItem = ({
   };
   formattedDate = formattedDate.toLocaleDateString("en-US", options);
 
+  const taskCompletedHandler = () => {
+    // send update to database
+
+    setIsTaskComplete(!isTaskCompleted);
+  };
+
+  const removeTaskHandler = () => {
+    // delete task code
+  };
+
+  let taskStyle = isTaskCompleted
+    ? { "background-color": colorValue, border: "none", color: "white" }
+    : null;
+
   return (
-    <div className="task-item" style={{ background: colorValue }}>
-      {
-        // NOTE: button puede cambiar de estilo dependiendo
-        // del valor de isDone (o como tu veas Andreita)
-      }
-      <button>✓</button>
+    <div className="task-item" style={{ border: `2px solid ${colorValue}` }}>
+      <button
+        className="task-item__remove"
+        style={{ "background-color": `${colorValue}` }}
+        onClick={removeTaskHandler}
+      >
+        x
+      </button>
       <h3>{title}</h3>
       <p>{formattedDate}</p>
+      <button
+        className="task-item__complete"
+        onClick={taskCompletedHandler}
+        style={taskStyle}
+      >
+        ✓
+      </button>
     </div>
   );
 };

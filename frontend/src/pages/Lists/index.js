@@ -11,6 +11,7 @@ const Lists = () => {
   const [sortedLists, setSortedLists] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   console.log(isLoading);
+
   const showFormHandler = () => {
     setFormIsShown(true);
     console.log("HERE");
@@ -46,7 +47,7 @@ const Lists = () => {
 
   return (
     <div>
-      <Sidebar onAddList={showFormHandler} title="My lists" returnButton={false}/>
+      <Sidebar onAdd={showFormHandler} title="My lists" returnButton={false}/>
       {formIsShown && <Form onClose={hideFormHandler} />}
       {isLoading ? (
         <p>Loading...</p>

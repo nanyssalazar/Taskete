@@ -1,46 +1,68 @@
 @import "../../variables.scss";
 
 .task-item {
-  width: inherit;
+  width: 100%;
   height: inherit;
-  padding: 8px 16px 24px;
+  padding: 16px;
+  padding-right: 0;
   border-radius: 8px;
   font-family: $default-font;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 0.4fr;
+  grid-template-areas:
+    ". remove"
+    "title complete"
+    "date complete";
   transition: all 0.2s ease-in-out;
-
-  &:hover {
-    transform: scale(1.03);
-    cursor: pointer;
-  }
 
   p {
     padding: 4px 0;
   }
 
-  button {
-    align-self: flex-end;
+  &__complete {
+    grid-area: complete;
+    margin-right: 16px;
     border: none;
     border-radius: 50%;
-    width: 24px;
-    height: 24px;
+    width: 30px;
+    height: 30px;
+    justify-self: end;
+    background-color: transparent;
+    border: 1px solid $black-color;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      transform: scale(1.2);
+      cursor: pointer;
+    }
+  }
+
+  &__remove {
+    grid-area: remove;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
     padding: 4px;
     margin-bottom: 4px;
-    margin-right: -20px;
-    margin-top: -16px;
+    margin-left: 94%;
+    margin-top: -28px;
     background-color: inherit;
     filter: contrast(80%) brightness(130%)
       drop-shadow(-2px 3px 28px $black-color);
     transition: all 0.2s ease-in-out;
 
     &:hover {
-      background-color: $black-color;
-      color: $white-color;
       transform: scale(1.2);
       cursor: pointer;
     }
+
+    @media (max-width: $breakpoint-half-screen) {
+      margin-left: 90%;
+    }
+
+    @media (max-width: $breakpoint-phone-screen) {
+      margin-left: 70%;
+    }
   }
 }
-
-

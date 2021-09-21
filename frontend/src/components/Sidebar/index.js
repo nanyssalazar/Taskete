@@ -14,7 +14,7 @@ const Sidebar = (props) => {
     <div className="sidebar">
       <div>
         <p className="sidebar__title">{props.title}</p>
-        <button className="sidebar__add" onClick={props.onAddList}>
+        <button className="sidebar__add" onClick={props.onAdd}>
           +
         </button>
       </div>

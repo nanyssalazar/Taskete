@@ -1,7 +1,21 @@
 @import "../../variables";
 
 .tasks-container {
-  margin: 48px 36px 48px 180px;
+  margin: 48px 56px 48px 200px;
+  display: grid;
+  justify-items: center;
+  grid-template-columns: 1fr;
+  column-gap: 24px;
+  row-gap: 32px;
+
+  @media (max-width: $breakpoint-ipad-screen) and (min-width: $breakpoint-ipad-screen) {
+    margin-left: 240px;
+  }
+
+  @media (max-width: $breakpoint-phone-screen) {
+    margin-left: 140px;
+    margin-right: 40px;
+  }
 }
 
 .no-tasks {
