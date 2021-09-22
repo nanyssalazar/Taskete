@@ -9,7 +9,7 @@ module.exports = {
     // const lists = await List.aggregate([
     //   { $match: { author: { id: userId } } },
     // ]);
-    const lists = await List.find({ author: authorId });
+    const lists = await List.aggregate([{ $match: { author: authorId } }, { $sort: { lastEdited: -1 } }]);
     if (lists) {
       return res.json(lists);
     } else {

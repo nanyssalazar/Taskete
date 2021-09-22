@@ -7,9 +7,7 @@ import "./Lists.scss";
 
 const Lists = () => {
   const [formIsShown, setFormIsShown] = useState(false);
-  // creo que no ocupamos este estado
   const [lists, setLists] = useState([]);
-  const [sortedLists, setSortedLists] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   console.log(isLoading);
 
@@ -38,31 +36,15 @@ const Lists = () => {
 
   const fetchLists = async () => {
     const author = localStorage.getItem("_id");
-    console.log("RUTA", `/lists/${author}`);
     const response = await api.get(`/lists/${author}`);
     const listsFetched = response.data;
-    console.log("fetched", listsFetched);
     setLists(listsFetched);
-    listsFetched.map((item) => {
-      item.lastEdited = new Date(item.lastEdited);
-    });
-    setSortedLists(
-      listsFetched.sort(
-        (a, b) => b.lastEdited.valueOf() - a.lastEdited.valueOf()
-      )
-    );
     setIsLoading(false);
   };
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      fetchLists();
-    }, 400);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
+    fetchLists();
+  });
 
   return (
     <div>
@@ -72,9 +54,9 @@ const Lists = () => {
       )}
       {isLoading ? (
         <p>Loading...</p>
-      ) : sortedLists.length > 0 ? (
+      ) : lists.length > 0 ? (
         <div className="lists-container">
-          {sortedLists.map((list) => (
+          {lists.map((list) => (
             <ListItem key={list._id} {...list} />
           ))}
         </div>

@@ -40,27 +40,13 @@ const Tasks = () => {
     const response = await api.get(`/tasks/${author}`);
     const fetchedTasks = response.data;
     setTasks(fetchedTasks);
+    setIsLoading(false);
   };
 
-  const sortTasks = () => {
-    tasks.map((item) => {
-      item.lastEdited = new Date(item.lastEdited);
-    });
-
-    setTasks(
-      tasks.sort(
-        (a, b) => b.lastEdited.valueOf() - a.lastEdited.valueOf()
-      )
-    );
-  }
 
   useEffect(() => {
-    setTimeout(() => {
       fetchTasks();
-      sortTasks();
-      setIsLoading(false);
-    }, 150);
-  }, []);
+  });
 
   return (
     <div>
