@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { GoogleLogout } from 'react-google-login';
 import { IoLogOut } from 'react-icons/io5';
@@ -6,11 +6,9 @@ import '../Logout/Logout.scss';
 require('dotenv').config();
 
 const Logout = () => {
-  const [isLoggedIn, setIsLogedIn] = useState(false);
   let history = useHistory();
 
   const onLogoutSuccess = () => {
-    setIsLogedIn(false);
     console.log('[Logout Success] currentUser:');
     localStorage.clear();
     alert('Has cerrado sesión.');

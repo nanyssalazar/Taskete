@@ -30,6 +30,7 @@ const Tasks = () => {
     //colorValue: colorValue,
     //});
     //console.log(response);
+    console.log("form submit from tasks");
     window.location.reload();
   };
 

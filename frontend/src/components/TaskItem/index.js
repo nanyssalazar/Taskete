@@ -31,14 +31,14 @@ const TaskItem = ({
   };
 
   let taskStyle = isTaskCompleted
-    ? { "background-color": colorValue, border: "none", color: "white" }
+    ? { "backgroundColor": colorValue, border: "none", color: "white" }
     : null;
 
   return (
     <div className="task-item" style={{ border: `2px solid ${colorValue}` }}>
       <button
         className="task-item__remove"
-        style={{ "background-color": `${colorValue}` }}
+        style={{ "backgroundColor": `${colorValue}` }}
         onClick={removeTaskHandler}
       >
         x

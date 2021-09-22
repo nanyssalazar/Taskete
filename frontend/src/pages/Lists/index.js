@@ -7,6 +7,7 @@ import "./Lists.scss";
 
 const Lists = () => {
   const [formIsShown, setFormIsShown] = useState(false);
+  // creo que no ocupamos este estado
   const [lists, setLists] = useState([]);
   const [sortedLists, setSortedLists] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -24,9 +25,9 @@ const Lists = () => {
   const submitList = async (e, title, colorValue) => {
     e.preventDefault();
     // Recolectando info del autor
-    const author = localStorage.getItem('_id');
+    const author = localStorage.getItem("_id");
     console.log(title, author, colorValue);
-    const response = await api.post('/lists/', {
+    const response = await api.post("/lists/", {
       title: title,
       author: author,
       colorValue: colorValue,
@@ -37,6 +38,7 @@ const Lists = () => {
 
   const fetchLists = async () => {
     const author = localStorage.getItem("_id");
+    console.log("RUTA", `/lists/${author}`);
     const response = await api.get(`/lists/${author}`);
     const listsFetched = response.data;
     console.log("fetched", listsFetched);
@@ -44,7 +46,6 @@ const Lists = () => {
     listsFetched.map((item) => {
       item.lastEdited = new Date(item.lastEdited);
     });
-    console.log("sorted lsits with lists", lists);
     setSortedLists(
       listsFetched.sort(
         (a, b) => b.lastEdited.valueOf() - a.lastEdited.valueOf()
@@ -54,15 +55,21 @@ const Lists = () => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       fetchLists();
-    }, 150);
+    }, 400);
+
+    return () => {
+      clearTimeout(timer);
+    };
   }, []);
 
   return (
     <div>
       <Sidebar onAdd={showFormHandler} title="My lists" returnButton={false} />
-      {formIsShown && <Form mode="List" onSubmit={submitList} onClose={hideFormHandler} />}
+      {formIsShown && (
+        <Form mode="List" onSubmit={submitList} onClose={hideFormHandler} />
+      )}
       {isLoading ? (
         <p>Loading...</p>
       ) : sortedLists.length > 0 ? (
