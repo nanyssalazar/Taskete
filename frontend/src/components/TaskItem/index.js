@@ -8,9 +8,8 @@ const TaskItem = ({
   colorValue,
   dateCreated,
   lastEdited,
-  isDone,
 }) => {
-  const [isTaskCompleted, setIsTaskComplete] = useState(false);
+  const [isTaskCompleted, setIsTaskCompleted] = useState(false);
 
   let formattedDate = new Date(lastEdited);
   const options = {
@@ -24,7 +23,7 @@ const TaskItem = ({
   const taskCompletedHandler = () => {
     // send update to database
 
-    setIsTaskComplete(!isTaskCompleted);
+    setIsTaskCompleted(!isTaskCompleted);
   };
 
   const removeTaskHandler = () => {

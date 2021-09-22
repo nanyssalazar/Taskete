@@ -21,6 +21,20 @@ const Lists = () => {
     setFormIsShown(false);
   };
 
+  const submitList = async (e, title, colorValue) => {
+    e.preventDefault();
+    // Recolectando info del autor
+    const author = localStorage.getItem('_id');
+    console.log(title, author, colorValue);
+    const response = await api.post('/lists/', {
+      title: title,
+      author: author,
+      colorValue: colorValue,
+    });
+    console.log(response);
+    window.location.reload();
+  };
+
   const fetchLists = async () => {
     const author = localStorage.getItem("_id");
     const response = await api.get(`/lists/${author}`);
@@ -47,8 +61,8 @@ const Lists = () => {
 
   return (
     <div>
-      <Sidebar onAdd={showFormHandler} title="My lists" returnButton={false}/>
-      {formIsShown && <Form onClose={hideFormHandler} />}
+      <Sidebar onAdd={showFormHandler} title="My lists" returnButton={false} />
+      {formIsShown && <Form mode="List" onSubmit={submitList} onClose={hideFormHandler} />}
       {isLoading ? (
         <p>Loading...</p>
       ) : sortedLists.length > 0 ? (
