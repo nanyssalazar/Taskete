@@ -33,19 +33,20 @@ const Tasks = () => {
 
   const submitTask = async (e, title, colorValue) => {
     e.preventDefault();
-    // Recolectando info del autor
-    //const author = localStorage.getItem('_id');
-    // TODO: poner endpoint correcto
-    //console.log(title, author, colorValue);
-    //const response = await api.post('/tasks/', {
-    //title: title,
-    //author: author,
-    //colorValue: colorValue,
-    //});
-    //console.log(response);
+    var pathArray = window.location.pathname.split('/');
+    var listId = pathArray[2];
+    // Recolectando info de la list
+    console.log(title, listId, colorValue);
+    const response = await api.post('/tasks/', {
+      description: title,
+      colorValue: colorValue,
+      linkedList: listId,
+    });
+    console.log(response);
     console.log('form submit from tasks');
     window.location.reload();
   };
+
 
   return (
     <div>

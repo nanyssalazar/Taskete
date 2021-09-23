@@ -14,19 +14,11 @@ module.exports = {
   },
   async createTask(req, res) {
     console.log(req.body);
-    const {
-      description,
-      dateCreated,
-      lastEdited,
-      status,
-      colorValue,
-      linkedList,
-    } = req.body;
+    const { description, colorValue, linkedList } = req.body;
+    const status = 'undone';
     //linkedList refers to the list which it links to
     const task = await Task.create({
       description,
-      dateCreated,
-      lastEdited,
       status,
       colorValue,
       linkedList,
@@ -34,6 +26,7 @@ module.exports = {
     console.log(task);
     return res.json(task);
   },
+
   async updateTask(req, res) {
     const { taskId } = req.params;
     try {
