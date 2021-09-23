@@ -21,7 +21,6 @@ const ListItem = ({
   formattedDate = formattedDate.toLocaleDateString('en-US', options);
 
   const listItemHandler = () => {
-    localStorage.setItem('listId', _id);
     history.push(`/lists/${_id}`);
   };
 

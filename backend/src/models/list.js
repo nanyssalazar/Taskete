@@ -7,20 +7,6 @@ const ListSchema = new mongoose.Schema({
   //relacionar con lists
   author: String,
   colorValue: String,
-  //   author: {
-  //     id: {
-  //       type: mongoose.Schema.Types.ObjectId,
-  //       ref: 'User',
-  //     },
-  //     name: String,
-  //   },
-  //relacionar con tasks
-  //   tasks: [
-  //     {
-  //       type: mongoose.Schema.Types.ObjectId,
-  //       ref: 'Task',
-  //     },
-  //   ],
 });
 
 module.exports = mongoose.model('List', ListSchema);

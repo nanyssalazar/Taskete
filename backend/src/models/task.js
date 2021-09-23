@@ -8,13 +8,6 @@ const TaskSchema = new mongoose.Schema({
   colorValue: String,
   // relacionar con list
   linkedList: String,
-  //   list: {
-  //     id: {
-  //       type: mongoose.Schema.Types.ObjectId,
-  //       ref: 'List',
-  //     },
-  //     title: String,
-  //   },
 });
 
 module.exports = mongoose.model('Task', TaskSchema);
