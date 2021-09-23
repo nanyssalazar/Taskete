@@ -22,6 +22,7 @@ routes.delete('/lists/:listId', ListsController.deleteList);
 // TASKS
 routes.post('/tasks', TasksController.createTask);
 routes.get('/tasks/:listId', TasksController.getAllTasks);
+routes.put('/tasks/:taskId', TasksController.updateTask);
 routes.delete('/tasks/:taskId', TasksController.deleteTask);
 
 module.exports = routes;
