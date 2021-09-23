@@ -5,6 +5,7 @@ const TaskSchema = new mongoose.Schema({
   dateCreated: { type: Date, default: Date.now },
   lastEdited: { type: Date, default: Date.now },
   status: String,
+  colorValue: String,
   // relacionar con list
   linkedList: String,
   //   list: {

@@ -5,8 +5,6 @@ module.exports = {
   //get all task from one list
   async getAllTasks(req, res) {
     const { listId } = req.params;
-    //const listId = list._id;
-    // const tasks = await Task.aggregate([{ $match: { list: { id: listId } } }]);
     const tasks = await Task.find({ linkedList: listId });
     if (tasks) {
       return res.json(tasks);
@@ -16,18 +14,34 @@ module.exports = {
   },
   async createTask(req, res) {
     console.log(req.body);
-    const { description, dateCreated, lastEdited, status, linkedList } =
-      req.body;
+    const {
+      description,
+      dateCreated,
+      lastEdited,
+      status,
+      colorValue,
+      linkedList,
+    } = req.body;
     //linkedList refers to the list which it links to
     const task = await Task.create({
       description,
       dateCreated,
       lastEdited,
       status,
+      colorValue,
       linkedList,
     });
     console.log(task);
     return res.json(task);
+  },
+  async updateTask(req, res) {
+    const { taskId } = req.params;
+    try {
+      await Task.updateOne({ _id: taskId }, { $set: req.body.headers });
+      return res.json({ message: 'Update succesfull' });
+    } catch (e) {
+      return res.json({ message: 'Could not update' });
+    }
   },
   async deleteTask(req, res) {
     const { taskId } = req.params;

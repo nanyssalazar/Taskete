@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import Sidebar from "../../components/Sidebar";
-import Form from "../../components/Form";
-import ListItem from "../../components/ListItem";
-import api from "../../services/api";
-import "./Lists.scss";
+import React, { useState, useEffect } from 'react';
+import Sidebar from '../../components/Sidebar';
+import Form from '../../components/Form';
+import ListItem from '../../components/ListItem';
+import api from '../../services/api';
+import './Lists.scss';
 
 const Lists = () => {
   const [formIsShown, setFormIsShown] = useState(false);
@@ -13,7 +13,7 @@ const Lists = () => {
 
   const showFormHandler = () => {
     setFormIsShown(true);
-    console.log("HERE");
+    console.log('HERE');
   };
 
   const hideFormHandler = () => {
@@ -23,9 +23,9 @@ const Lists = () => {
   const submitList = async (e, title, colorValue) => {
     e.preventDefault();
     // Recolectando info del autor
-    const author = localStorage.getItem("_id");
+    const author = localStorage.getItem('_id');
     console.log(title, author, colorValue);
-    const response = await api.post("/lists/", {
+    const response = await api.post('/lists/', {
       title: title,
       author: author,
       colorValue: colorValue,
@@ -35,7 +35,7 @@ const Lists = () => {
   };
 
   const fetchLists = async () => {
-    const author = localStorage.getItem("_id");
+    const author = localStorage.getItem('_id');
     const response = await api.get(`/lists/${author}`);
     const listsFetched = response.data;
     setLists(listsFetched);
@@ -44,27 +44,27 @@ const Lists = () => {
 
   useEffect(() => {
     fetchLists();
-  });
+  }, []);
 
   return (
     <div>
-      <Sidebar onAdd={showFormHandler} title="My lists" returnButton={false} />
+      <Sidebar onAdd={showFormHandler} title='My lists' returnButton={false} />
       {formIsShown && (
-        <Form mode="List" onSubmit={submitList} onClose={hideFormHandler} />
+        <Form mode='List' onSubmit={submitList} onClose={hideFormHandler} />
       )}
       {isLoading ? (
         <p>Loading...</p>
       ) : lists.length > 0 ? (
-        <div className="lists-container">
+        <div className='lists-container'>
           {lists.map((list) => (
             <ListItem key={list._id} {...list} />
           ))}
         </div>
       ) : (
         <>
-          <div className="no-lists">
+          <div className='no-lists'>
             <p>You don't have any lists yet</p>
-            <img src="https://media.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif?cid=ecf05e475guek39srikhna896xhu67fmy2jccyf82nztpmba&rid=giphy.gif&ct=g" />
+            <img src='https://media.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif?cid=ecf05e475guek39srikhna896xhu67fmy2jccyf82nztpmba&rid=giphy.gif&ct=g' />
           </div>
         </>
       )}
