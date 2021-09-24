@@ -39,8 +39,6 @@ const Tasks = () => {
   }
   const submitTask = async (e, title, colorValue) => {
     e.preventDefault();
-    let pathArray = window.location.pathname.split("/");
-    let listId = pathArray[2];
     // Recolectando info de la list
     console.log(title, listId, colorValue);
     const response = await api.post("/tasks/", {
