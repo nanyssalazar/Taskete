@@ -9,6 +9,10 @@ const Tasks = () => {
   const [formIsShown, setFormIsShown] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  //used to call useEffect everythime a form is sent
+  const [formSent, setFormSent] = useState(false);
+  const pathArray = window.location.pathname.split('/');
+  const listId = pathArray[2];
 
   const showFormHandler = () => {
     setFormIsShown(true);
@@ -19,17 +23,11 @@ const Tasks = () => {
   };
 
   const fetchTasks = async () => {
-    var pathArray = window.location.pathname.split('/');
-    var listId = pathArray[2];
     const response = await api.get(`/tasks/${listId}`);
     const tasksFetched = response.data;
     setTasks(tasksFetched);
     setIsLoading(false);
   };
-
-  useEffect(() => {
-    fetchTasks();
-  }, []);
 
   const submitTask = async (e, title, colorValue) => {
     e.preventDefault();
@@ -38,15 +36,20 @@ const Tasks = () => {
     // Recolectando info de la list
     console.log(title, listId, colorValue);
     const response = await api.post('/tasks/', {
-      description: title,
+      title: title,
       colorValue: colorValue,
-      linkedList: listId,
+      listId: listId,
     });
     console.log(response);
     console.log('form submit from tasks');
-    window.location.reload();
+    setFormSent(true);
+    hideFormHandler();
   };
 
+  useEffect(() => {
+    fetchTasks();
+    setFormSent(false);
+  }, [formSent]);
 
   return (
     <div>

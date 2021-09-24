@@ -5,7 +5,7 @@ module.exports = {
   //get all task from one list
   async getAllTasks(req, res) {
     const { listId } = req.params;
-    const tasks = await Task.find({ linkedList: listId });
+    const tasks = await Task.find({ listId: listId });
     if (tasks) {
       return res.json(tasks);
     } else {
@@ -14,14 +14,14 @@ module.exports = {
   },
   async createTask(req, res) {
     console.log(req.body);
-    const { description, colorValue, linkedList } = req.body;
+    const { title, colorValue, listId } = req.body;
     const status = 'undone';
     //linkedList refers to the list which it links to
     const task = await Task.create({
-      description,
+      title,
       status,
       colorValue,
-      linkedList,
+      listId,
     });
     console.log(task);
     return res.json(task);
