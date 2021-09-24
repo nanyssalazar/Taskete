@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
 import '../Login/Login.scss';
@@ -6,11 +6,9 @@ import api from '../../services/api.js';
 require('dotenv').config();
 
 const Login = () => {
-  const [isLoggedIn, setIsLogedIn] = useState(false);
   let history = useHistory();
 
   const onLoginSuccess = async (res) => {
-    setIsLogedIn(true);
     console.log('[Login Success] currentUser:', res.profileObj);
     localStorage.setItem('givenName', res.profileObj.givenName);
     localStorage.setItem('familyName', res.profileObj.familyName);

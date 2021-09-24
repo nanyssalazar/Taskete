@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import api from '../../services/api';
 import './Form.scss';
 
 const Form = (props) => {
@@ -14,34 +13,20 @@ const Form = (props) => {
     setColorValue(event.target.value);
   };
 
-  const submitHandler = async (event) => {
-    event.preventDefault();
-    // Recolectando info del autor
-    const author = localStorage.getItem('_id');
-    console.log(title, author, colorValue);
-    const response = await api.post('/lists/', {
-      title: title,
-      author: author,
-      colorValue: colorValue,
-    });
-    console.log(response);
-    window.location.reload();
-  };
-
   return (
     <>
       <div className='backdrop' onClick={props.onClose} />
-      <form className='form' onSubmit={submitHandler}>
-        <p>New List</p>
-        <label>List's title</label>
+      <form className='form' onSubmit={(e) => props.onSubmit(e, title, colorValue)}>
+        <p>New {props.mode}</p>
+        <label>{props.mode}'s title</label>
         <input
           type='text'
           required
-          placeholder="Your list's title"
+          placeholder={"Your " + props.mode.toLowerCase() + "'s title"}
           value={title}
           onChange={titleChangeHandler}
         />
-        <label>List's color</label>
+        <label>{props.mode}'s color</label>
         <input
           type='color'
           list='colors'
@@ -60,7 +45,7 @@ const Form = (props) => {
             Cancel
           </button>
           <button type='submit' className='form__add'>
-            Add List
+            Add {props.mode}
           </button>
         </div>
       </form>
