@@ -17,6 +17,7 @@ routes.delete('/users/:userId', UsersController.deleteUser);
 // LISTS
 routes.post('/lists', ListsController.createList);
 routes.get('/lists/:authorId', ListsController.getAllLists);
+routes.get('/list/:listId', ListsController.getListById);
 routes.delete('/lists/:listId', ListsController.deleteList);
 
 // TASKS

@@ -12,14 +12,19 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 32px 0 40px;
+  padding: 32px 8px 40px;
   text-align: center;
+
+   &--container {
+     width: 100%;
+   }
 
   &__title {
     font-family: $default-font;
     font-size: 24px;
     font-weight: bold;
     padding-bottom: 40px;
+    overflow-y: scroll;
   }
 
   &__add {

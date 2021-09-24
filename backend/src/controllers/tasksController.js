@@ -5,7 +5,10 @@ module.exports = {
   //get all task from one list
   async getAllTasks(req, res) {
     const { listId } = req.params;
-    const tasks = await Task.find({ listId: listId });
+    const tasks = await Task.aggregate([
+      { $match: { listId: listId } },
+      { $sort: { lastEdited: -1 } },
+    ]);
     if (tasks) {
       return res.json(tasks);
     } else {

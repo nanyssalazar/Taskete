@@ -12,7 +12,7 @@ const Sidebar = (props) => {
   };
   return (
     <div className="sidebar">
-      <div>
+      <div className="sidebar--container">
         <p className="sidebar__title">{props.title}</p>
         <button className="sidebar__add" onClick={props.onAdd}>
           +
