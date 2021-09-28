@@ -1,6 +1,6 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import './ListItem.scss';
+import React from "react";
+import { useHistory } from "react-router-dom";
+import "./ListItem.scss";
 
 const ListItem = ({
   _id,
@@ -9,20 +9,20 @@ const ListItem = ({
   colorValue,
   dateCreated,
   lastEdited,
-},
-  onDelete) => {
+  onDelete,
+}) => {
   let history = useHistory();
   let formattedDate = new Date(lastEdited);
   const options = {
-    weekday: 'short',
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
+    weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
   };
-  formattedDate = formattedDate.toLocaleDateString('en-US', options);
+  formattedDate = formattedDate.toLocaleDateString("en-US", options);
 
   const listItemHandler = (e) => {
-    if (e.target.id === 'x-button') {
+    if (e.target.id === "x-button") {
       return;
     }
     history.push(`/lists/${_id}`);
@@ -30,10 +30,13 @@ const ListItem = ({
 
   return (
     <div
-      className='list-item'
+      className="list-item"
       style={{ background: colorValue }}
-      onClick={listItemHandler}>
-      <button id='x-button' onClick={onDelete}>x</button>
+      onClick={listItemHandler}
+    >
+      <button id="x-button" onClick={onDelete}>
+        x
+      </button>
       <h3>{title}</h3>
       <p>{formattedDate}</p>
     </div>
