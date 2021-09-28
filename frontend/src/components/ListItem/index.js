@@ -9,7 +9,8 @@ const ListItem = ({
   colorValue,
   dateCreated,
   lastEdited,
-}) => {
+},
+  onDelete) => {
   let history = useHistory();
   let formattedDate = new Date(lastEdited);
   const options = {
@@ -20,7 +21,10 @@ const ListItem = ({
   };
   formattedDate = formattedDate.toLocaleDateString('en-US', options);
 
-  const listItemHandler = () => {
+  const listItemHandler = (e) => {
+    if (e.target.id === 'x-button') {
+      return;
+    }
     history.push(`/lists/${_id}`);
   };
 
@@ -29,7 +33,7 @@ const ListItem = ({
       className='list-item'
       style={{ background: colorValue }}
       onClick={listItemHandler}>
-      <button>x</button>
+      <button id='x-button' onClick={onDelete}>x</button>
       <h3>{title}</h3>
       <p>{formattedDate}</p>
     </div>

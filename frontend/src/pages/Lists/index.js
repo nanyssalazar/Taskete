@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../../components/Sidebar';
 import Form from '../../components/Form';
+import AlertDialog from '../../components/AlertDialog'
 import ListItem from '../../components/ListItem';
 import api from '../../services/api';
 import './Lists.scss';
 
 const Lists = () => {
   const [formIsShown, setFormIsShown] = useState(false);
+  const [alertIsShown, setAlertIsShown] = useState(false);
   const [lists, setLists] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   //used to call useEffect everythime a form is sent
@@ -18,6 +20,15 @@ const Lists = () => {
 
   const hideFormHandler = () => {
     setFormIsShown(false);
+  };
+
+  const showAlertHandler = () => {
+    console.log("show alert");
+    //setAlertIsShown(true);
+  };
+
+  const hideAlertHandler = () => {
+    setAlertIsShown(false);
   };
 
   const submitList = async (e, title, colorValue) => {
@@ -58,12 +69,15 @@ const Lists = () => {
       {formIsShown && (
         <Form mode='List' onSubmit={submitList} onClose={hideFormHandler} />
       )}
+      {alertIsShown && (
+        <AlertDialog onClose={hideAlertHandler} />
+      )}
       {isLoading ? (
         <p>Loading...</p>
       ) : lists.length > 0 ? (
         <div className='lists-container'>
           {lists.map((list) => (
-            <ListItem key={list._id} {...list} />
+            <ListItem onDelete={showAlertHandler} key={list._id} {...list} />
           ))}
         </div>
       ) : (
