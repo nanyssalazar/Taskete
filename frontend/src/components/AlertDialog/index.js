@@ -8,7 +8,7 @@ const AlertDialog = (props) => {
       props.onClose();
     }
     // Submit on Enter key
-    if (event.key === "Enter") {
+    else if (event.key === "Enter") {
       document.getElementById("alert-confirm").click();
     }
   };

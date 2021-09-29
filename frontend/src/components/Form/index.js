@@ -19,9 +19,9 @@ const Form = (props) => {
 
   const keyHandler = (event) => {
     let inputs = document.getElementsByTagName("input");
-    if (event.which === 13) {
+    if (event.key === "Enter") {
       const currentNode = event.target;
-      // find index of current inptu
+      // find index of current input
       const currentIndex = [...inputs].findIndex((el) =>
         currentNode.isEqualNode(el)
       );
@@ -38,17 +38,13 @@ const Form = (props) => {
 
   window.onkeydown = (event) => {
     if (event.key === "Escape") {
-      console.log("HERE");
       props.onClose();
     }
   };
   return (
     <>
       <div className="backdrop" onClick={props.onClose} />
-      <form
-        className="form"
-        // onSubmit={(e) => props.onSubmit(e, title, colorValue)}
-      >
+      <form className="form">
         <p>New {props.mode}</p>
         <label>{props.mode}'s title</label>
         <input
