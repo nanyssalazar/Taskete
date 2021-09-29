@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../../components/Sidebar';
 import Form from '../../components/Form';
-import AlertDialog from '../../components/AlertDialog'
+import AlertDialog from '../../components/AlertDialog';
 import ListItem from '../../components/ListItem';
 import api from '../../services/api';
 import './Lists.scss';
@@ -24,7 +24,7 @@ const Lists = () => {
 
   const showAlertHandler = () => {
     setAlertIsShown(true);
-  }
+  };
 
   const hideAlertHandler = () => {
     setAlertIsShown(false);
@@ -41,10 +41,13 @@ const Lists = () => {
   };
 
   const deleteList = async (e, listId) => {
-    e.preventDefault();
+    e.preventDefault(); // puede quitar
+    //buscar id de la list
+    //peticion api delete /lists/listid
+    //peticion api delete /tasks/listid
+    //mensaje consolelog
     // TODO: Agregar petición para eliminar lista
   };
-
 
   const submitList = async (e, title, colorValue) => {
     e.preventDefault();
@@ -101,7 +104,8 @@ const Lists = () => {
             <ListItem
               onDelete={(e) => deleteOrAlert(e, list._id)}
               key={list._id}
-              {...list} />
+              {...list}
+            />
           ))}
         </div>
       ) : (
