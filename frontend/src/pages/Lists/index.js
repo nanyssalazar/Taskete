@@ -23,13 +23,28 @@ const Lists = () => {
   };
 
   const showAlertHandler = () => {
-    console.log("show alert");
-    //setAlertIsShown(true);
-  };
+    setAlertIsShown(true);
+  }
 
   const hideAlertHandler = () => {
     setAlertIsShown(false);
   };
+
+  const deleteOrAlert = async (e, listId) => {
+    const response = await api.get(`/tasks/${listId}`);
+    const tasksFetched = response.data;
+    if (tasksFetched.length === 0) {
+      deleteList(e, listId);
+      return;
+    }
+    showAlertHandler();
+  };
+
+  const deleteList = async (e, listId) => {
+    e.preventDefault();
+    // TODO: Agregar petición para eliminar lista
+  };
+
 
   const submitList = async (e, title, colorValue) => {
     e.preventDefault();
@@ -70,14 +85,23 @@ const Lists = () => {
         <Form mode='List' onSubmit={submitList} onClose={hideFormHandler} />
       )}
       {alertIsShown && (
-        <AlertDialog onClose={hideAlertHandler} />
+        <AlertDialog
+          title='Delete list?'
+          message='This list contains tasks.'
+          submitBtnMsg='Delete list'
+          onClose={hideAlertHandler}
+          onSubmit={deleteList}
+        />
       )}
       {isLoading ? (
         <p>Loading...</p>
       ) : lists.length > 0 ? (
         <div className='lists-container'>
           {lists.map((list) => (
-            <ListItem onDelete={showAlertHandler} key={list._id} {...list} />
+            <ListItem
+              onDelete={(e) => deleteOrAlert(e, list._id)}
+              key={list._id}
+              {...list} />
           ))}
         </div>
       ) : (

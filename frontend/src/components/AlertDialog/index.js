@@ -5,16 +5,15 @@ const AlertDialog = (props) => {
   return (
     <>
       <div className='backdrop' />
-      <form className='form' >
-        <p>Dummy text</p>
-        <label>Dummy Text</label>
-        <label>Dummy Text</label>
+      <form className='form' onSubmit={(e) => props.onSubmit(e)}>
+        <p>{props.title}</p>
+        <label>{props.message}</label>
         <div className='form--actions'>
           <button onClick={props.onClose} className='form__cancel'>
             Cancel
           </button>
           <button type='submit' className='form__add'>
-            Delete Dummy
+            {props.submitBtnMsg}
           </button>
         </div>
       </form>
