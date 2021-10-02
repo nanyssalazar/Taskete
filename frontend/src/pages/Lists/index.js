@@ -15,7 +15,6 @@ const Lists = () => {
   const [formSent, setFormSent] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   //sets listId that will be deleted
-  // const [listForRemoval, setListForRemoval] = useState('');
   const [selectedList, setSelectedList] = useState('');
 
   const showFormHandler = () => {
@@ -37,11 +36,9 @@ const Lists = () => {
   const deleteOrAlert = async (e, listId) => {
     setSelectedList(listId);
     const listForRemoval = listId;
-    console.log('listforremoval', listForRemoval);
     const response = await api.get(`/tasks/${listForRemoval}`);
     const tasksFetched = response.data;
     if (tasksFetched.length === 0) {
-      console.log('here');
       deleteList(listForRemoval);
       setIsDeleting(true);
       return;
@@ -51,12 +48,9 @@ const Lists = () => {
 
   const deleteList = async (listForRemoval) => {
     const _id = listForRemoval;
-    console.log('ID FRO LIST', listForRemoval);
     // LLAMADA API BORRAR LISTS
     const response = await api.delete(`/lists/${_id}`);
     // use status, it's not sending message correctly (empty message)
-    console.log('response', response.status);
-    // console.log('responseAPI', responseLists.data.message);
     response.status === 204
       ? alert('Se ha eliminado la lista.')
       : alert('No ha sido posible eliminar la lista.');
@@ -69,7 +63,6 @@ const Lists = () => {
     response.status === 200
       ? alert('Se eliminaron tareas dentro de lista')
       : alert('No hay elementos en la lista.');
-    console.log(response.data.message);
     setIsDeleting(true);
   };
 
