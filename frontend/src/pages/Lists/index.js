@@ -50,9 +50,8 @@ const Lists = () => {
     const _id = listForRemoval;
     // LLAMADA API BORRAR LISTS
     const response = await api.delete(`/lists/${_id}`);
-    // use status, it's not sending message correctly (empty message)
     response.status === 204
-      ? alert('Se ha eliminado la lista.')
+      ? console.log('Se ha eliminado la lista.')
       : alert('No ha sido posible eliminar la lista.');
   };
 
@@ -61,7 +60,7 @@ const Lists = () => {
     // LLAMADA API BORRAR TASKS DE UNA LIST
     const response = await api.delete(`/lists/tasks/${_id}`);
     response.status === 200
-      ? alert('Se eliminaron tareas dentro de lista')
+      ? console.log('Se eliminaron tareas dentro de lista')
       : alert('No hay elementos en la lista.');
     setIsDeleting(true);
   };
