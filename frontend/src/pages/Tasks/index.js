@@ -1,18 +1,22 @@
-import React, { useState, useEffect } from "react";
-import Sidebar from "../../components/Sidebar";
-import Form from "../../components/Form";
-import TaskItem from "../../components/TaskItem";
-import api from "../../services/api";
-import "./Tasks.scss";
+import React, { useState, useEffect } from 'react';
+import Sidebar from '../../components/Sidebar';
+import Form from '../../components/Form';
+import AlertDialog from '../../components/AlertDialog';
+import TaskItem from '../../components/TaskItem';
+import api from '../../services/api';
+import './Tasks.scss';
 
 const Tasks = () => {
   const [formIsShown, setFormIsShown] = useState(false);
+  const [alertIsShown, setAlertIsShown] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [listTitle, setListTitle] = useState("");
+  const [listTitle, setListTitle] = useState('');
   //used to call useEffect everythime a form is sent
   const [formSent, setFormSent] = useState(false);
-  const pathArray = window.location.pathname.split("/");
+  //sets the taskId that wants to be deleated
+  const [taskForRemoval, setTaskForRemoval] = useState('');
+  const pathArray = window.location.pathname.split('/');
   const listId = pathArray[2];
 
   const showFormHandler = () => {
@@ -21,6 +25,14 @@ const Tasks = () => {
 
   const hideFormHandler = () => {
     setFormIsShown(false);
+  };
+
+  const showAlertHandler = () => {
+    setAlertIsShown(true);
+  };
+
+  const hideAlertHandler = () => {
+    setAlertIsShown(false);
   };
 
   const fetchTasks = async () => {
@@ -33,23 +45,39 @@ const Tasks = () => {
 
   const fetchListTitle = async () => {
     const response = await api.get(`/list/${listId}`);
-    // object destructuring to get the title 
-    const {title} = response.data;
-    setListTitle(title)
-  }
+    const { title } = response.data;
+    setListTitle(title);
+  };
+
   const submitTask = async (e, title, colorValue) => {
     e.preventDefault();
     // Recolectando info de la list
     console.log(title, listId, colorValue);
-    const response = await api.post("/tasks/", {
+    const response = await api.post('/tasks/', {
       title: title,
       colorValue: colorValue,
       listId: listId,
     });
     console.log(response);
-    console.log("form submit from tasks");
+    console.log('form submit from tasks');
     setFormSent(true);
     hideFormHandler();
+  };
+
+  const callAlert = async (e, taskId) => {
+    setTaskForRemoval(taskId);
+    showAlertHandler();
+  };
+
+  //esta funciona va dentro del OK en el form que confirma el borrado, NO EN LA X DE LA TASK
+  const removeTaskHandler = async () => {
+    //buscar como definir id
+    const id = taskForRemoval;
+    const response = await api.delete(`/tasks/${id}`);
+    response.data.message === 'Task deleted'
+      ? console.log('Se ha eliminado la task.')
+      : console.log('No ha sido posible eliminar la task.');
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -60,29 +88,38 @@ const Tasks = () => {
 
   return (
     <div>
-      <Sidebar
-        onAdd={showFormHandler}
-        title={listTitle}
-        returnButton={true}
-      />
+      <Sidebar onAdd={showFormHandler} title={listTitle} returnButton={true} />
       {formIsShown && (
-        <Form mode="Task" onSubmit={submitTask} onClose={hideFormHandler} />
+        <Form mode='Task' onSubmit={submitTask} onClose={hideFormHandler} />
+      )}
+      {alertIsShown && (
+        <AlertDialog
+          title='Delete task?'
+          message='You will permanently remove this task.'
+          submitBtnMsg='Delete task'
+          onClose={hideAlertHandler}
+          onSubmit={removeTaskHandler}
+        />
       )}
       {isLoading ? (
         <p>Loading...</p>
       ) : tasks.length > 0 ? (
-        <div className="tasks-container">
+        <div className='tasks-container'>
           {tasks.map((task) => (
-            <TaskItem key={task._id} {...task} />
+            <TaskItem
+              onDelete={(e) => callAlert(e, task._id)}
+              key={task._id}
+              {...task}
+            />
           ))}
         </div>
       ) : (
         <>
-          <div className="no-tasks">
+          <div className='no-tasks'>
             <p>You don't have any tasks yet</p>
             <img
-              src="https://media.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif?cid=ecf05e475guek39srikhna896xhu67fmy2jccyf82nztpmba&rid=giphy.gif&ct=g"
-              alt="Spongebob gif that says to do: nothing"
+              src='https://media.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif?cid=ecf05e475guek39srikhna896xhu67fmy2jccyf82nztpmba&rid=giphy.gif&ct=g'
+              alt='Spongebob gif that says to do: nothing'
             />
           </div>
         </>

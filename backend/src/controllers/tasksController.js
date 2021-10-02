@@ -48,4 +48,13 @@ module.exports = {
       return res.status(200).json({ message: 'Task not found.' });
     }
   },
+  async deleteTasksByListId(req, res) {
+    const { listId } = req.params;
+    try {
+      await Task.deleteMany({ listId: listId });
+      return res.status(204).json({ message: 'Tasks Deleted' });
+    } catch (e) {
+      return res.status(200).json({ message: 'Tasks not found' });
+    }
+  },
 };

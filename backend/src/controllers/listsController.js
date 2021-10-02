@@ -1,5 +1,5 @@
-const List = require("../models/list");
-require("dotenv").config();
+const List = require('../models/list');
+require('dotenv').config();
 
 module.exports = {
   //get all list that have the same author
@@ -16,18 +16,17 @@ module.exports = {
       res.json({});
     }
   },
-  async getListById(req,res) {
-    const {listId} = req.params;
+  async getListById(req, res) {
+    const { listId } = req.params;
     console.log(listId);
     // only returns the title as an object
-    const listTitle = await List.findById(listId).select("title -_id");
-    if(listTitle) {
-      return res.json(listTitle)
+    const listTitle = await List.findById(listId).select('title -_id');
+    if (listTitle) {
+      return res.json(listTitle);
     } else {
-      return res.json({message:"List not found."})
+      return res.json({ message: 'List not found.' });
     }
-  }
-  ,
+  },
   async createList(req, res) {
     console.log(req.body);
     const { title, author, colorValue } = req.body;
@@ -42,9 +41,9 @@ module.exports = {
     const { listId } = req.params;
     try {
       await List.findByIdAndDelete(listId);
-      return res.status(204).json({ message: "List Deleted" });
+      return res.status(204).json({ message: 'List Deleted' });
     } catch (e) {
-      return res.status(200).json({ message: "List not found." });
+      return res.status(200).json({ message: 'List not found.' });
     }
   },
 };

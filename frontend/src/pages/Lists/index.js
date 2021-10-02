@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../../components/Sidebar';
 import Form from '../../components/Form';
+import AlertDialog from '../../components/AlertDialog';
 import ListItem from '../../components/ListItem';
 import api from '../../services/api';
 import './Lists.scss';
 
 const Lists = () => {
   const [formIsShown, setFormIsShown] = useState(false);
+  const [alertIsShown, setAlertIsShown] = useState(false);
   const [lists, setLists] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   //used to call useEffect everythime a form is sent
   const [formSent, setFormSent] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  //sets listId that will be deleted
+  const [selectedList, setSelectedList] = useState('');
 
   const showFormHandler = () => {
     setFormIsShown(true);
@@ -18,6 +23,46 @@ const Lists = () => {
 
   const hideFormHandler = () => {
     setFormIsShown(false);
+  };
+
+  const showAlertHandler = () => {
+    setAlertIsShown(true);
+  };
+
+  const hideAlertHandler = () => {
+    setAlertIsShown(false);
+  };
+
+  const deleteOrAlert = async (e, listId) => {
+    setSelectedList(listId);
+    const listForRemoval = listId;
+    const response = await api.get(`/tasks/${listForRemoval}`);
+    const tasksFetched = response.data;
+    if (tasksFetched.length === 0) {
+      deleteList(listForRemoval);
+      setIsDeleting(true);
+      return;
+    }
+    showAlertHandler();
+  };
+
+  const deleteList = async (listForRemoval) => {
+    const _id = listForRemoval;
+    // LLAMADA API BORRAR LISTS
+    const response = await api.delete(`/lists/${_id}`);
+    response.status === 204
+      ? console.log('Se ha eliminado la lista.')
+      : alert('No ha sido posible eliminar la lista.');
+  };
+
+  const deleteTasksFromList = async (listForRemoval) => {
+    const _id = listForRemoval;
+    // LLAMADA API BORRAR TASKS DE UNA LIST
+    const response = await api.delete(`/lists/tasks/${_id}`);
+    response.status === 200
+      ? console.log('Se eliminaron tareas dentro de lista')
+      : alert('No hay elementos en la lista.');
+    setIsDeleting(true);
   };
 
   const submitList = async (e, title, colorValue) => {
@@ -47,10 +92,11 @@ const Lists = () => {
     let timer = setTimeout(() => {
       fetchLists();
       setFormSent(false);
+      setIsDeleting(false);
     }, 200);
 
     return () => clearTimeout(timer);
-  }, [formSent]);
+  }, [formSent, isDeleting]);
 
   return (
     <div>
@@ -58,12 +104,28 @@ const Lists = () => {
       {formIsShown && (
         <Form mode='List' onSubmit={submitList} onClose={hideFormHandler} />
       )}
+      {alertIsShown && (
+        <AlertDialog
+          title='Delete list?'
+          message='This list contains tasks.'
+          submitBtnMsg='Delete list'
+          onClose={hideAlertHandler}
+          onSubmit={() => {
+            deleteList(selectedList);
+            deleteTasksFromList(selectedList);
+          }}
+        />
+      )}
       {isLoading ? (
         <p>Loading...</p>
       ) : lists.length > 0 ? (
         <div className='lists-container'>
           {lists.map((list) => (
-            <ListItem key={list._id} {...list} />
+            <ListItem
+              onDelete={(e) => deleteOrAlert(e, list._id)}
+              key={list._id}
+              {...list}
+            />
           ))}
         </div>
       ) : (
