@@ -13,6 +13,8 @@ const Lists = () => {
   const [isLoading, setIsLoading] = useState(true);
   //used to call useEffect everythime a form is sent
   const [formSent, setFormSent] = useState(false);
+  //sets listId that will be deleted
+  const [listForRemoval, setListForRemoval] = useState('');
 
   const showFormHandler = () => {
     setFormIsShown(true);
@@ -31,22 +33,33 @@ const Lists = () => {
   };
 
   const deleteOrAlert = async (e, listId) => {
+    setListForRemoval(listId);
     const response = await api.get(`/tasks/${listId}`);
     const tasksFetched = response.data;
+    //Genera error haciendo que el usuario deba dar doble click para poder eliminar listas vacias
+    //causa: se tarda en setear el id
     if (tasksFetched.length === 0) {
-      deleteList(e, listId);
+      deleteList();
       return;
     }
     showAlertHandler();
   };
 
-  const deleteList = async (e, listId) => {
-    e.preventDefault(); // puede quitar
-    //buscar id de la list
-    //peticion api delete /lists/listid
-    //peticion api delete /tasks/listid
-    //mensaje consolelog
-    // TODO: Agregar petición para eliminar lista
+  const deleteList = async () => {
+    const _id = listForRemoval;
+    // LLAMADA API BORRAR LISTS
+    const responseLists = await api.delete(`/lists/${_id}`);
+    console.log(responseLists.data.message);
+    responseLists.data.message === 'List Deleted'
+      ? console.log('Se ha eliminado la lista.')
+      : console.log('No ha sido posible eliminar la lista.')
+    // LLAMADA API BORRAR TASKS DE UNA LIST
+    const responseTasks = await api.delete(`/lists/tasks/${_id}`);
+    responseTasks.data.message === 'Tasks Deleted'
+      ? console.log('Se eliminaron tareas dentro de lista')
+      : console.log('No hay elementos en la lista.')
+    console.log(responseTasks.data.message);
+    //window.location.reload();
   };
 
   const submitList = async (e, title, colorValue) => {
