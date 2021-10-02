@@ -37,12 +37,13 @@ const Lists = () => {
   const deleteOrAlert = async (e, listId) => {
     setSelectedList(listId);
     const listForRemoval = listId;
-    console.log("listforremoval",listForRemoval);
+    console.log('listforremoval', listForRemoval);
     const response = await api.get(`/tasks/${listForRemoval}`);
     const tasksFetched = response.data;
     if (tasksFetched.length === 0) {
-      console.log("here");
+      console.log('here');
       deleteList(listForRemoval);
+      setIsDeleting(true);
       return;
     }
     showAlertHandler();
@@ -50,23 +51,26 @@ const Lists = () => {
 
   const deleteList = async (listForRemoval) => {
     const _id = listForRemoval;
-    console.log("ID FRO LIST", listForRemoval);
+    console.log('ID FRO LIST', listForRemoval);
     // LLAMADA API BORRAR LISTS
-    const responseLists = await api.delete(`/lists/${_id}`);
+    const response = await api.delete(`/lists/${_id}`);
     // use status, it's not sending message correctly (empty message)
-    console.log("response", responseLists.status);
+    console.log('response', response.status);
     // console.log('responseAPI', responseLists.data.message);
-    responseLists.status === 204
-      ? alert("Se ha eliminado la lista.")
-      : alert("No ha sido posible eliminar la lista.");
+    response.status === 204
+      ? alert('Se ha eliminado la lista.')
+      : alert('No ha sido posible eliminar la lista.');
+  };
+
+  const deleteTasksFromList = async (listForRemoval) => {
+    const _id = listForRemoval;
     // LLAMADA API BORRAR TASKS DE UNA LIST
-    const responseTasks = await api.delete(`/lists/tasks/${_id}`);
-    responseTasks.status === 200
-      ? alert("Se eliminaron tareas dentro de lista")
-      : alert("No hay elementos en la lista.");
-    console.log(responseTasks.data.message);
+    const response = await api.delete(`/lists/tasks/${_id}`);
+    response.status === 200
+      ? alert('Se eliminaron tareas dentro de lista')
+      : alert('No hay elementos en la lista.');
+    console.log(response.data.message);
     setIsDeleting(true);
-    
   };
 
   const submitList = async (e, title, colorValue) => {
@@ -114,7 +118,10 @@ const Lists = () => {
           message='This list contains tasks.'
           submitBtnMsg='Delete list'
           onClose={hideAlertHandler}
-          onSubmit={() => deleteList(selectedList)}
+          onSubmit={() => {
+            deleteList(selectedList);
+            deleteTasksFromList(selectedList);
+          }}
         />
       )}
       {isLoading ? (
