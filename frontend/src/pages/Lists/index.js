@@ -16,6 +16,7 @@ const Lists = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   //sets listId that will be deleted
   // const [listForRemoval, setListForRemoval] = useState('');
+  const [selectedList, setSelectedList] = useState('');
 
   const showFormHandler = () => {
     setFormIsShown(true);
@@ -34,13 +35,11 @@ const Lists = () => {
   };
 
   const deleteOrAlert = async (e, listId) => {
-    // setListForRemoval(listId);
+    setSelectedList(listId);
     const listForRemoval = listId;
     console.log("listforremoval",listForRemoval);
     const response = await api.get(`/tasks/${listForRemoval}`);
     const tasksFetched = response.data;
-    //Genera error haciendo que el usuario deba dar doble click para poder eliminar listas vacias
-    //causa: se tarda en setear el id
     if (tasksFetched.length === 0) {
       console.log("here");
       deleteList(listForRemoval);
@@ -115,7 +114,7 @@ const Lists = () => {
           message='This list contains tasks.'
           submitBtnMsg='Delete list'
           onClose={hideAlertHandler}
-          onSubmit={deleteList}
+          onSubmit={() => deleteList(selectedList)}
         />
       )}
       {isLoading ? (
