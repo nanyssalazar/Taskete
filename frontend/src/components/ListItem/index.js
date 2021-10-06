@@ -21,6 +21,21 @@ const ListItem = ({
   };
   formattedDate = formattedDate.toLocaleDateString("en-US", options);
 
+  const listStatusHandler = async () => {
+    const response = await api.put(`/lists/${_id}`, {
+      headers: {
+        //aqui iria lo que ustedes utilicen para guardar la info
+        title: 'New title for list',
+        lastEdited: Date.now(),
+      },
+    });
+    if (response.data.message === 'Update succesfull') {
+      console.log('Se ha actualizado la task.');
+    } else {
+      console.log('No se actualizo task.');
+    }
+  };
+
   const listItemHandler = (e) => {
     if (e.target.id === "x-button") {
       return;

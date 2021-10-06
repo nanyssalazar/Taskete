@@ -23,7 +23,7 @@ const TaskItem = ({
   };
   formattedDate = formattedDate.toLocaleDateString('en-US', options);
 
-  const taskStatusHandler = async (isTaskCompleted) => {
+  /*const taskStatusHandler = async (isTaskCompleted) => {
     console.log(status);
     var newStatus = '';
     if (displayedStatus === 'done') {
@@ -41,9 +41,9 @@ const TaskItem = ({
     } else {
       console.log('No se actualizo task.');
     }
-  };
+  };*/
 
-  const taskTitleHandler = async () => {
+  const taskStatusHandler = async () => {
     const response = await api.put(`/tasks/${_id}`, {
       headers: {
         //aqui iria lo que ustedes utilicen para guardar la info
