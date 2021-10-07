@@ -17,7 +17,15 @@
   
   h3 {
     overflow: auto;
+    &:hover {
+      cursor: url("../../images/pen-icon.png"), default;
+    }
+
+    &:focus {
+      outline: none;
+      cursor: text;
   }
+}
 
   p {
     padding: 4px 0;
