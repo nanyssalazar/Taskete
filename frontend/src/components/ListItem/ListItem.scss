@@ -14,7 +14,7 @@
     transform: scale(1.2);
     cursor: pointer;
   }
-  
+
   h3 {
     overflow: auto;
     &:hover {
@@ -24,8 +24,8 @@
     &:focus {
       outline: none;
       cursor: text;
+    }
   }
-}
 
   p {
     padding: 4px 0;
