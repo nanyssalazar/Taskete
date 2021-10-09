@@ -13,6 +13,7 @@ const TaskItem = ({
   onDelete,
 }) => {
   const [displayedStatus, setDisplayedStatus] = useState(status);
+  const [newTaskTitle, setNewTaskTitle] = useState(title);
 
   let formattedDate = new Date(lastEdited);
   const options = {
@@ -62,7 +63,13 @@ const TaskItem = ({
     if (e.target.id === 'x-button') {
       return;
     }
+
+    setNewTaskTitle(e.target.innerHTML);
   };
+
+  const newTaskTitleHandler = (e) => {
+    console.log("FOCUS", e.target);
+  }
 
   let taskStyle =
     displayedStatus === 'done'
@@ -77,7 +84,15 @@ const TaskItem = ({
         onClick={onDelete}>
         x
       </button>
-      <h3>{title}</h3>
+      <h3
+        value={newTaskTitle}
+        contentEditable={true}
+        onFocus={newTaskTitleHandler}
+        onBlur={taskItemHandler}
+        suppressContentEditableWarning={true}
+      >
+        {title}
+      </h3>
       <p>{formattedDate}</p>
       <button
         className='task-item__complete'

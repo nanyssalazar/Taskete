@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import api from "../../services/api";
 import "./ListItem.scss";
@@ -12,11 +12,11 @@ const ListItem = ({
   lastEdited,
   onDelete,
 }) => {
-  
+
   let history = useHistory();
   const [newListTitle, setNewListTitle] = useState(title);
 
-  
+
   let formattedDate = new Date(lastEdited);
   const options = {
     weekday: "short",
@@ -42,35 +42,43 @@ const ListItem = ({
   };
 
   const listItemHandler = (e) => {
+    // aqui dijeron que daba error 
+    if (e.target.id === "x-button") {
+      return;
+    }
+
     console.log("LOSE FOCUS", e.target);
     console.log("content", e.target.innerHTML);
     // se mandaria esto
     setNewListTitle(e.target.innerHTML);
 
-    // aqui dijeron que daba error 
-    // if (e.target.id === "x-button") {
-    //   return;
-    // }
-    // history.push(`/lists/${_id}`);
+    history.push(`/lists/${_id}`);
   };
 
   const newListTitleHandler = (e) => {
     console.log("FOCUS", e.target);
- 
+
   }
 
- 
+
   return (
     <div
       className="list-item"
       style={{ background: colorValue }}
-      // onClick={listItemHandler}
+      onClick={listItemHandler}
     >
       <button id="x-button" onClick={onDelete}>
         x
       </button>
       {/* we would call the api in the onBlur tag */}
-      <h3 value={newListTitle} contentEditable={true} onFocus={newListTitleHandler} onBlur={listItemHandler}>{title}</h3>
+      <h3
+        value={newListTitle}
+        suppressContentEditableWarning={true}
+        contentEditable={true}
+        onFocus={newListTitleHandler}
+        onBlur={listItemHandler}>
+        {title}
+      </h3>
       <p>{formattedDate}</p>
     </div>
   );

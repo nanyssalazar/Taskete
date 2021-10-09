@@ -19,6 +19,18 @@
     padding: 4px 0;
   }
 
+  h3 {
+    overflow: auto;
+    &:hover {
+      cursor: url("../../images/pen-icon.png"), default;
+    }
+
+    &:focus {
+      outline: none;
+      cursor: text;
+    }
+  }
+
   &__complete {
     grid-area: complete;
     margin-right: 16px;
