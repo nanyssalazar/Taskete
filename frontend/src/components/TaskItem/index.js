@@ -13,6 +13,7 @@ const TaskItem = ({
   onDelete,
 }) => {
   const [displayedStatus, setDisplayedStatus] = useState(status);
+  //no estamos usando este state
   const [newTaskTitle, setNewTaskTitle] = useState(title);
 
   let formattedDate = new Date(lastEdited);
@@ -24,7 +25,7 @@ const TaskItem = ({
   };
   formattedDate = formattedDate.toLocaleDateString('en-US', options);
 
-  /*const taskStatusHandler = async (isTaskCompleted) => {
+  const taskStatusHandler = async (isTaskCompleted) => {
     console.log(status);
     var newStatus = '';
     if (displayedStatus === 'done') {
@@ -42,13 +43,32 @@ const TaskItem = ({
     } else {
       console.log('No se actualizo task.');
     }
-  };*/
+  };
 
-  const taskStatusHandler = async () => {
+  // const taskTitleHandler = async (taskTitle) => {
+  //   console.log(taskTitle);
+  //   const response = await api.put(`/tasks/${_id}`, {
+  //     headers: {
+  //       //aqui iria lo que ustedes utilicen para guardar la info
+  //       title: taskTitle,
+  //       lastEdited: Date.now(),
+  //     },
+  //   });
+  //   if (response.data.message === 'Update succesfull') {
+  //     console.log('Se ha actualizado la task.');
+  //   } else {
+  //     console.log('No se actualizo task.');
+  //   }
+  // };
+
+  const taskTitleHandler = async (e) => {
+    if (e.target.id === 'x-button') {
+      return;
+    }
+    const newTitle = e.target.innerHTML;
     const response = await api.put(`/tasks/${_id}`, {
       headers: {
-        //aqui iria lo que ustedes utilicen para guardar la info
-        title: 'New title for task4',
+        title: newTitle,
         lastEdited: Date.now(),
       },
     });
@@ -57,19 +77,13 @@ const TaskItem = ({
     } else {
       console.log('No se actualizo task.');
     }
+    window.location.reload();
   };
 
-  const taskItemHandler = (e) => {
-    if (e.target.id === 'x-button') {
-      return;
-    }
-
-    setNewTaskTitle(e.target.innerHTML);
-  };
-
+  //esta funcion se borra no?
   const newTaskTitleHandler = (e) => {
-    console.log("FOCUS", e.target);
-  }
+    console.log('FOCUS', e.target);
+  };
 
   let taskStyle =
     displayedStatus === 'done'
@@ -88,9 +102,8 @@ const TaskItem = ({
         value={newTaskTitle}
         contentEditable={true}
         onFocus={newTaskTitleHandler}
-        onBlur={taskItemHandler}
-        suppressContentEditableWarning={true}
-      >
+        onBlur={(e) => taskTitleHandler(e)}
+        suppressContentEditableWarning={true}>
         {title}
       </h3>
       <p>{formattedDate}</p>
