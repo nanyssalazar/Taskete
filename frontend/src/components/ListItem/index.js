@@ -14,7 +14,7 @@ const ListItem = ({
 }) => {
   let history = useHistory();
   const [newListTitle, setNewListTitle] = useState(title);
-
+  const [previousTitle, setPreviousTitle] = useState(title);
   let formattedDate = new Date(lastEdited);
   const options = {
     weekday: 'short',
@@ -24,30 +24,22 @@ const ListItem = ({
   };
   formattedDate = formattedDate.toLocaleDateString('en-US', options);
 
-  //borrar despues
-  // const listStatusHandler = async () => {
-  //   const response = await api.put(`/lists/${_id}`, {
-  //     headers: {
-  //       //aqui iria lo que ustedes utilicen para guardar la info
-  //       title: 'New title for list',
-  //       lastEdited: Date.now(),
-  //     },
-  //   });
-  //   if (response.data.message === 'Update succesfull') {
-  //     console.log('Se ha actualizado la task.');
-  //   } else {
-  //     console.log('No se actualizo task.');
-  //   }
-  // };
+    const listItemHandler = (e) => {
+      if (e.target.id === "x-button") {
+        return;
+      } else if (e.target.id === "list-item-title"){
+        return;
+      }
+      history.push(`/lists/${_id}`);
+    };
 
   const listTitleHandler = async (e) => {
-    // aqui dijeron que daba error
-    if (e.target.id === 'x-button') {
-      return;
-    }
     console.log('LOSE FOCUS', e.target);
     const newTitle = e.target.innerHTML;
-    console.log('nuevo titulo:', newTitle); //borrar despues de probar
+    console.log('nuevo titulo:', newTitle); 
+    if (previousTitle === newTitle) {
+      return;
+    }//borrar despues de probar
     const response = await api.put(`/lists/${_id}`, {
       headers: {
         title: newTitle,
@@ -67,17 +59,23 @@ const ListItem = ({
   };
 
   return (
-    <div className='list-item' style={{ background: colorValue }}>
-      <button id='x-button' onClick={onDelete}>
+    <div
+      className="list-item"
+      style={{ background: colorValue }}
+      onClick={listItemHandler}
+    >
+      <button id="x-button" onClick={onDelete}>
         x
       </button>
       {/* we would call the api in the onBlur tag */}
       <h3
+        id="list-item-title"
         value={newListTitle}
         suppressContentEditableWarning={true}
         contentEditable={true}
         onFocus={newListTitleHandler}
-        onBlur={(e) => listTitleHandler(e)}>
+        onBlur={(e) => listTitleHandler(e)}
+      >
         {title}
       </h3>
       <p>{formattedDate}</p>
