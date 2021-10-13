@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import api from '../../services/api';
 import './ListItem.scss';
@@ -6,15 +6,11 @@ import './ListItem.scss';
 const ListItem = ({
   _id,
   title,
-  author,
   colorValue,
-  dateCreated,
   lastEdited,
   onDelete,
 }) => {
   let history = useHistory();
-  const [newListTitle, setNewListTitle] = useState(title);
-  const [previousTitle, setPreviousTitle] = useState(title);
   let formattedDate = new Date(lastEdited);
   const options = {
     weekday: 'short',
@@ -37,9 +33,9 @@ const ListItem = ({
     console.log('LOSE FOCUS', e.target);
     const newTitle = e.target.innerHTML;
     console.log('nuevo titulo:', newTitle); 
-    if (previousTitle === newTitle) {
+    if (newTitle === title) {
       return;
-    }//borrar despues de probar
+    }
     const response = await api.put(`/lists/${_id}`, {
       headers: {
         title: newTitle,
@@ -54,10 +50,6 @@ const ListItem = ({
     window.location.reload(); // si quieren probar que haga todo bien comenten esta linea para ver console log
   };
 
-  const newListTitleHandler = (e) => {
-    console.log('FOCUS', e.target);
-  };
-
   return (
     <div
       className="list-item"
@@ -70,10 +62,9 @@ const ListItem = ({
       {/* we would call the api in the onBlur tag */}
       <h3
         id="list-item-title"
-        value={newListTitle}
+        value={title}
         suppressContentEditableWarning={true}
         contentEditable={true}
-        onFocus={newListTitleHandler}
         onBlur={(e) => listTitleHandler(e)}
       >
         {title}

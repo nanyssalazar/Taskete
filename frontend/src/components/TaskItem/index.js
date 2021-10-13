@@ -5,16 +5,13 @@ import './TaskItem.scss';
 const TaskItem = ({
   _id,
   title,
-  dateCreated,
   lastEdited,
   status,
   colorValue,
-  listId,
   onDelete,
 }) => {
+
   const [displayedStatus, setDisplayedStatus] = useState(status);
-  //no estamos usando este state
-  const [newTaskTitle, setNewTaskTitle] = useState(title);
 
   let formattedDate = new Date(lastEdited);
   const options = {
@@ -25,7 +22,7 @@ const TaskItem = ({
   };
   formattedDate = formattedDate.toLocaleDateString('en-US', options);
 
-  const taskStatusHandler = async (isTaskCompleted) => {
+  const taskStatusHandler = async () => {
     console.log(status);
     var newStatus = '';
     if (displayedStatus === 'done') {
@@ -45,27 +42,14 @@ const TaskItem = ({
     }
   };
 
-  // const taskTitleHandler = async (taskTitle) => {
-  //   console.log(taskTitle);
-  //   const response = await api.put(`/tasks/${_id}`, {
-  //     headers: {
-  //       //aqui iria lo que ustedes utilicen para guardar la info
-  //       title: taskTitle,
-  //       lastEdited: Date.now(),
-  //     },
-  //   });
-  //   if (response.data.message === 'Update succesfull') {
-  //     console.log('Se ha actualizado la task.');
-  //   } else {
-  //     console.log('No se actualizo task.');
-  //   }
-  // };
-
   const taskTitleHandler = async (e) => {
     if (e.target.id === 'x-button') {
       return;
     }
     const newTitle = e.target.innerHTML;
+    if (newTitle === title) {
+      return;
+    }
     const response = await api.put(`/tasks/${_id}`, {
       headers: {
         title: newTitle,
@@ -78,11 +62,6 @@ const TaskItem = ({
       console.log('No se actualizo task.');
     }
     window.location.reload();
-  };
-
-  //esta funcion se borra no?
-  const newTaskTitleHandler = (e) => {
-    console.log('FOCUS', e.target);
   };
 
   let taskStyle =
@@ -99,9 +78,8 @@ const TaskItem = ({
         x
       </button>
       <h3
-        value={newTaskTitle}
+        value={title}
         contentEditable={true}
-        onFocus={newTaskTitleHandler}
         onBlur={(e) => taskTitleHandler(e)}
         suppressContentEditableWarning={true}>
         {title}
