@@ -14,9 +14,17 @@
     transform: scale(1.2);
     cursor: pointer;
   }
-  
+
   h3 {
     overflow: auto;
+    &:hover {
+      cursor: url("../../images/pen-icon.png"), default;
+    }
+
+    &:focus {
+      outline: none;
+      cursor: text;
+    }
   }
 
   p {

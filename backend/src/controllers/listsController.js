@@ -37,6 +37,15 @@ module.exports = {
     });
     return res.json(list);
   },
+  async updateList(req, res) {
+    const { listId } = req.params;
+    try {
+      await List.updateOne({ _id: listId }, { $set: req.body.headers });
+      return res.json({ message: 'Update succesfull' });
+    } catch (e) {
+      return res.json({ message: 'Could not update' });
+    }
+  },
   async deleteList(req, res) {
     const { listId } = req.params;
     try {

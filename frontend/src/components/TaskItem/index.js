@@ -5,13 +5,12 @@ import './TaskItem.scss';
 const TaskItem = ({
   _id,
   title,
-  dateCreated,
   lastEdited,
   status,
   colorValue,
-  listId,
   onDelete,
 }) => {
+
   const [displayedStatus, setDisplayedStatus] = useState(status);
 
   let formattedDate = new Date(lastEdited);
@@ -23,7 +22,7 @@ const TaskItem = ({
   };
   formattedDate = formattedDate.toLocaleDateString('en-US', options);
 
-  const taskStatusHandler = async (isTaskCompleted) => {
+  const taskStatusHandler = async () => {
     console.log(status);
     var newStatus = '';
     if (displayedStatus === 'done') {
@@ -32,7 +31,7 @@ const TaskItem = ({
       newStatus = 'done';
     }
     const response = await api.put(`/tasks/${_id}`, {
-      headers: { status: newStatus },
+      headers: { status: newStatus, lastEdited: Date.now() },
     });
     if (response.data.message === 'Update succesfull') {
       console.log('Se ha actualizado la task.');
@@ -43,10 +42,26 @@ const TaskItem = ({
     }
   };
 
-  const taskItemHandler = (e) => {
+  const taskTitleHandler = async (e) => {
     if (e.target.id === 'x-button') {
       return;
     }
+    const newTitle = e.target.innerHTML;
+    if (newTitle === title) {
+      return;
+    }
+    const response = await api.put(`/tasks/${_id}`, {
+      headers: {
+        title: newTitle,
+        lastEdited: Date.now(),
+      },
+    });
+    if (response.data.message === 'Update succesfull') {
+      console.log('Se ha actualizado la task.');
+    } else {
+      console.log('No se actualizo task.');
+    }
+    window.location.reload();
   };
 
   let taskStyle =
@@ -62,7 +77,13 @@ const TaskItem = ({
         onClick={onDelete}>
         x
       </button>
-      <h3>{title}</h3>
+      <h3
+        value={title}
+        contentEditable={true}
+        onBlur={(e) => taskTitleHandler(e)}
+        suppressContentEditableWarning={true}>
+        {title}
+      </h3>
       <p>{formattedDate}</p>
       <button
         className='task-item__complete'
