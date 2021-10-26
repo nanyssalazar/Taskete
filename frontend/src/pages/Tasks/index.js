@@ -69,9 +69,7 @@ const Tasks = () => {
     showAlertHandler();
   };
 
-  //esta funciona va dentro del OK en el form que confirma el borrado, NO EN LA X DE LA TASK
   const removeTaskHandler = async () => {
-    //buscar como definir id
     const id = taskForRemoval;
     const response = await api.delete(`/tasks/${id}`);
     response.data.message === 'Task deleted'

@@ -47,7 +47,7 @@ const ListItem = ({
     } else {
       console.log('No se actualizo list.');
     }
-    window.location.reload(); // si quieren probar que haga todo bien comenten esta linea para ver console log
+    window.location.reload();
   };
 
   return (
