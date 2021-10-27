@@ -59,7 +59,6 @@ const ListItem = ({
       <button id="x-button" onClick={onDelete}>
         x
       </button>
-      {/* we would call the api in the onBlur tag */}
       <h3
         id="list-item-title"
         value={title}

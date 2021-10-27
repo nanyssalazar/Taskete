@@ -18,10 +18,15 @@
     color: $white_color;
     transform: scale(1.1);
   }
-    @media (max-width: $breakpoint-ipad-screen) {
-        font-size: 28px;
-    }
-    @media (max-width: $breakpoint-half-screen) {
-        font-size: 18px;
-    }
+  @media (max-width: $breakpoint-ipad-screen) {
+    font-size: 28px;
+  }
+  @media (max-width: $breakpoint-half-screen) {
+    font-size: 18px;
+  }
+
+  @media (max-width: $breakpoint-smaller-phone) {
+    font-size: 16px;
+    width: 180px;
+  }
 }

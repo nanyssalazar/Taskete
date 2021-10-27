@@ -1,6 +1,6 @@
 import React from "react";
 import Login from "../../components/Login";
-import tasks from "../../images/tasks.png"
+import tasks from "../../images/tasks.png";
 import "./Home.scss";
 
 const Home = () => {
@@ -14,6 +14,16 @@ const Home = () => {
         </div>
       </div>
       <img src={tasks} alt="man crossing a task from a to-do list" />
+      <p className="hero__icons">
+        Icons made by <spam />
+        <a href="https://www.freepik.com" title="Freepik">
+          Freepik <spam />
+        </a>
+        from <spam />
+        <a href="https://www.flaticon.com/" title="Flaticon">
+          www.flaticon.com
+        </a>
+      </p>
     </div>
   );
 };
