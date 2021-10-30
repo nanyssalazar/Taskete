@@ -93,7 +93,7 @@ const Lists = () => {
       fetchLists();
       setFormSent(false);
       setIsDeleting(false);
-    }, 200);
+    }, 300);
 
     return () => clearTimeout(timer);
   }, [formSent, isDeleting]);
